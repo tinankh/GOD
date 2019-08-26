@@ -57,16 +57,23 @@ Compiling
 ---------
 
 The compiling instruction is
-
+```bash
   make
+```
+or if you want the code to be parallel
+```bash
+   make openmp
+```
+from the directory where the source codes and the Makefile are located.
 
 To verify a correct compilation you can apply the algorithm to the test images
 'pelican.ppm' and 'roma.pgm'. This can be done by executing:
-
+```bash
   make test
+```
 
 This should print the following message:
-
+```
 test on pelican.ppm
 ===================
 ./bin/main pelican.ppm 128 > temp
@@ -112,7 +119,7 @@ best NFA = 10^1.91207
 mean NFA = 10^2.31863
 
 grid origin NOT found
-
+```
 
 Running
 -------

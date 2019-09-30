@@ -23,40 +23,38 @@
 #include <string.h>
 #include <math.h>
 
-#include "../include/acontrario.h"
-#include "../include/jpegblocks.h"
-#include "../include/misc.h"
+#include "acontrario.h"
+#include "jpegblocks.h"
+#include "misc.h"
 
-int cross_difference(double *image, double *cross_diff, int X, int Y)
-{
+int cross_difference(double *image, double *cross_diff, int X, int Y) {
     int x, y;
-    for(x=0; x<(X-1); x++)
-        for(y=0; y<(Y-1); y++) {
+    for (x=0; x<(X-1); x++)
+        for (y=0; y<(Y-1); y++) {
             cross_diff[x+y*X] = fabs(image[x+y*X] + image[x+1+(y+1)*X]
-                                     - image[x+1+y*X] - image[x+(y+1)*X] );
+                                     - image[x+1+y*X] - image[x+(y+1)*X]);
         }
     return 1;
 }
 
 
-void compute_NFA(blockvote *Bv, double logNT)
-{
+void compute_NFA(blockvote *Bv, double logNT) {
     int i;
     Bv->nx = 0;
     Bv->kx = 0;
     Bv->ny = 0;
     Bv->ky = 0;
 
-    for(i=0; i<8; i++) {
+    for (i=0; i<8; i++) {
         Bv->nx += Bv->vote_col[i];
-        if( Bv->vote_col[i] > Bv->kx )  /* new max of votes in x */
-        {
+        if (Bv->vote_col[i] > Bv->kx) {
+/* new max of votes in x */
             Bv->kx = Bv->vote_col[i];
             Bv->grid.x = (i+1) % 8;
         }
         Bv->ny += Bv->vote_row[i];
-        if( Bv->vote_row[i] > Bv->ky ) /* new max of votes in y */
-        {
+        if (Bv->vote_row[i] > Bv->ky) {
+/* new max of votes in y */
             Bv->ky = Bv->vote_row[i];
             Bv->grid.y = (i+1) % 8;
         }
@@ -65,19 +63,14 @@ void compute_NFA(blockvote *Bv, double logNT)
     int w = Bv->coord_b.x - Bv->coord_a.x + 1;
     int h = Bv->coord_b.y - Bv->coord_a.y + 1;
 
-    Bv->lnfa.x = log_nfa( (int)(w*h/16), Bv->kx/2, (double)Bv->nx/(w*h), logNT );
-    Bv->lnfa.y = log_nfa( (int)(w*h/16), Bv->ky/2, (double)Bv->ny/(w*h), logNT );
-
-    printf("Bv->kx = %d, Bv->nx = %d, M = %d \n", Bv->kx/2, Bv->nx, w*h);
-    printf("LNFAx = log_nfa(%d / 16, %d, %f, %f\n", w*h, Bv->kx/2,
-           (double)Bv->nx/(w*h), logNT);
+    Bv->lnfa.x = log_nfa((int)(w*h/16), Bv->kx/2, (double)Bv->nx/(w*h), logNT);
+    Bv->lnfa.y = log_nfa((int)(w*h/16), Bv->ky/2, (double)Bv->ny/(w*h), logNT);
 }
 
 int vote(blockvote *Bv, double *cross_diff,
-         int X, int Y, double logNT)
-{
+         int X, int Y, double logNT) {
     int x, y, i;
-    for(i=0; i<8; i++)
+    for (i=0; i<8; i++)
         Bv->vote_col[i] = Bv->vote_row[i] = 0;
 
     for (x=Bv->coord_a.x; x<=Bv->coord_b.x; x++) {
@@ -99,21 +92,21 @@ int vote(blockvote *Bv, double *cross_diff,
 
     return 1;
 }
-void print_results(blockvote *Bv)
-{
+
+void print_results(blockvote *Bv) {
     int i;
 
     printf("===========================================================\n");
     printf("votes by columns: ");
-    for(i=0; i<8; i++) printf("%d ",Bv->vote_col[i]);
+    for (i=0; i<8; i++) printf("%d ",Bv->vote_col[i]);
     printf("\n");
     printf("votes by rows:    ");
-    for(i=0; i<8; i++) printf("%d ",Bv->vote_row[i]);
+    for (i=0; i<8; i++) printf("%d ",Bv->vote_row[i]);
     printf("\n");
     printf("nx %d kx %d nfa_x 10^%g\n",Bv->nx,Bv->kx,Bv->lnfa.x);
     printf("ny %d ky %d nfa_y 10^%g\n",Bv->ny,Bv->ky,Bv->lnfa.y);
     printf("block origin %d %d\n",Bv->grid.x,Bv->grid.y);
-    if( Bv->lnfa.x < 0.0 && Bv->lnfa.y < 0.0 )
+    if (Bv->lnfa.x < 0.0 && Bv->lnfa.y < 0.0)
         printf("JPEG grid found!\n");
     else
         printf("JPEG grid NOT found!\n");

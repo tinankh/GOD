@@ -1,3 +1,23 @@
+/*----------------------------------------------------------------------------
+
+  Copyright (c) 2018-2019 Rafael Grompone von Gioi <grompone@gmail.com>
+  Copyright (c) 2018-2019 Tina Nikoukhah <tinanikoukhah@gmail.com>
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+  ----------------------------------------------------------------------------*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -5,19 +25,18 @@
 #include <string.h>
 #include <omp.h>
 
-#include "../include/iio.h"
-#include "../include/acontrario.h"
-#include "../include/misc.h"
-#include "../include/jpegblocks.h"
+#include "iio.h"
+#include "acontrario.h"
+#include "misc.h"
+#include "jpegblocks.h"
 
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 /* outputs */
     FILE *global_result_file ;
-    global_result_file = fopen("./global_result.txt", "w") ;
+    global_result_file = fopen("./global_result.txt", "w");
 
     FILE *significant_none0;
     significant_none0 = fopen("./significant_n0.txt", "w");

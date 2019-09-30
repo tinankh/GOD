@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "../include/misc.h"
+#include "misc.h"
 
 /* LN10 */
 #ifndef M_LN10
@@ -41,46 +41,42 @@
 
 #define TABSIZE 100000
 
-double log_nfa(int n, int k, double p, double logNT)
-{
+double log_nfa(int n, int k, double p, double logNT) {
     static double inv[TABSIZE];  /* table to keep computed inverse values */
     double tolerance = 0.1;      /* an error of 10% in the result is accepted */
     double log1term,term,bin_term,mult_term,bin_tail,err;
     double p_term = p / (1.0-p);
     int i;
 
-    if( n<0 || k<0 || k>n || p<0.0 || p>1.0 ) {
+    if (n<0 || k<0 || k>n || p<0.0 || p>1.0) {
         printf("wrong n(%i), k(%i) or p(%f) values in nfa()", n, k, p);
         error("wrong n(%i), k(%i) or p(%f) values in nfa()");
     }
 
-    if( n==0 || k==0 ) return logNT;
-    if( n==k ) return logNT + (double)n * log10(p);
+    if (n==0 || k==0) return logNT;
+    if (n==k) return logNT + (double)n * log10(p);
 
     log1term = lgamma((double)n+1.0) - lgamma((double)k+1.0)
         - lgamma((double)(n-k)+1.0)
         + (double)k * log(p) + (double)(n-k) * log(1.0-p);
 
     term = exp(log1term);
-    if( term == 0.0 )                      /* the first term is almost zero */
-    {
-        if( (double)k > (double)n * p )    /* at begining or end of the tail? */
+    if (term == 0.0) {                      /* the first term is almost zero */
+        if ((double)k > (double)n * p)    /* at begining or end of the tail? */
             return log1term / M_LN10 + logNT; /* end: use just the first term */
         else
             return logNT;                  /* begin: the tail is roughly 1 */
     }
 
     bin_tail = term;
-    for(i=k+1;i<=n;i++)
-    {
+    for (i=k+1; i<=n; i++) {
         bin_term = (double)(n-i+1) * ( i<TABSIZE ?
                                        (inv[i]?inv[i] : (inv[i]=1.0/(double)i))
                                        : 1.0/(double)i );
         mult_term = bin_term * p_term;
         term *= mult_term;
         bin_tail += term;
-        if(bin_term<1.0)
-        {
+        if (bin_term<1.0) {
             /* when bin_term<1 then mult_term_j<mult_term_i for j>i.
                then, the error on the binomial tail when truncated at
                the i term can be bounded by a geometric serie of form
@@ -96,7 +92,7 @@ double log_nfa(int n, int k, double p, double logNT)
                tolerance * abs(-log10(bin_tail)-logNT) / (1/bin_tail)
                finally, we truncate the tail if the error is less than:
                tolerance * abs(-log10(bin_tail)-logNT) * bin_tail        */
-            if( err < tolerance * fabs(-log10(bin_tail)-logNT) * bin_tail )
+            if (err < tolerance * fabs(-log10(bin_tail)-logNT) * bin_tail)
                 break;
         }
     }

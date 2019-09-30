@@ -21,48 +21,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void error(char * msg)
-{
+void error(char * msg) {
     fprintf(stderr,"Error: %s\n",msg);
     exit(EXIT_FAILURE);
 }
 
-void * xmalloc(size_t n_items, size_t size)
-{
+void * xmalloc(size_t n_items, size_t size) {
     void * p;
-    if(size == 0)
+    if (size == 0)
         error("xmalloc: zero size");
     p = malloc(n_items*size);
-    if(p == NULL)
+    if (p == NULL)
         error("xmalloc: out of memory");
     return p;
 }
 
-void * xcalloc(size_t n_items, size_t size)
-{
+void * xcalloc(size_t n_items, size_t size) {
     void * p;
-    if(size == 0)
+    if (size == 0)
         error("xcalloc: zero size");
     p = calloc(n_items, size);
-    if(p == NULL)
+    if (p == NULL)
         error("xcalloc: out of memory");
     return p;
 }
 
-int grayscale(double *input, double *image, int X, int Y, int C)
-{
+int grayscale(double *input, double *image, int X, int Y, int C) {
     int x, y, c;
-    for(x=0; x<X; x++)
-        for(y=0; y<Y; y++)
-        {
-            for(c=0; c<C; c++)
+    for (x=0; x<X; x++)
+        for (y=0; y<Y; y++) {
+            for (c=0; c<C; c++)
                 image[x+y*X] += input[x+y*X+c*X*Y];
         }
     return 1;
 }
 
-int rgb2y(double *input, double *image, int X, int Y, int C)
-{
+int rgb2y(double *input, double *image, int X, int Y, int C) {
     int x, y;
     if (C >= 3) {
         for(x=0; x<X; x++)

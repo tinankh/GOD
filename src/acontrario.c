@@ -28,8 +28,6 @@
 #define M_LN10      2.30258509299404568401799145468436421
 #endif /* !M_LN10 */
 
-
-
 /**
  * \brief   Computes the logarithm of NFA to base 10, NFA = NT.b(n,k,p)
  * @param	    n total number of votes
@@ -61,11 +59,11 @@ double log_nfa(int n, int k, double p, double logNT) {
         + (double)k * log(p) + (double)(n-k) * log(1.0-p);
 
     term = exp(log1term);
-    if (term == 0.0) {                      /* the first term is almost zero */
-        if ((double)k > (double)n * p)    /* at begining or end of the tail? */
+    if (term == 0.0) {                       /* the first term is almost zero */
+        if ((double)k > (double)n * p)    /* at beginning or end of the tail? */
             return log1term / M_LN10 + logNT; /* end: use just the first term */
         else
-            return logNT;                  /* begin: the tail is roughly 1 */
+            return logNT;                     /* begin: the tail is roughly 1 */
     }
 
     bin_tail = term;

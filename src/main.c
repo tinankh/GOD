@@ -23,7 +23,6 @@
 #include <math.h>
 #include <float.h>
 #include <string.h>
-#include <omp.h>
 
 #include "iio.h"
 #include "acontrario.h"
@@ -36,13 +35,13 @@
 int main(int argc, char **argv) {
     /* outputs */
     FILE *list_blocks_file ;
-    list_blocks_file = fopen("./list_blocks.txt", "w");
+    list_blocks_file = fopen("list_blocks.txt", "w");
 
     FILE *meaningful_none0;
-    meaningful_none0 = fopen("./meaningful_n0.txt", "w");
+    meaningful_none0 = fopen("meaningful_n0.txt", "w");
 
     FILE *nonmeaningful;
-    nonmeaningful = fopen("./nonmeaningful.txt", "w");
+    nonmeaningful = fopen("nonmeaningful.txt", "w");
 
     /* inputs */
     if (argc < 3) error ("use: main <image> <block_size>");
@@ -186,7 +185,7 @@ int main(int argc, char **argv) {
                     if (result_block[maingrid.x + maingrid.y*8]
                             <= result_block[list_Bv[i][j].grid.x
                             + list_Bv[i][j].grid.y*8]) {
-                        fprintf(list_blocks_file, "Main grid changed! \n");
+                        fprintf(list_blocks_file, "Main grid changed!\n");
                         maingrid = list_Bv[i][j].grid;
                     }
                 }
@@ -196,7 +195,7 @@ int main(int argc, char **argv) {
 
     /* print global output */
     int nb_grids = 0;
-    printf("number of blocks: %i \n", N);
+    printf("number of blocks: %i\n", N);
     printf("number of blocks (meaningful / non-meaningful) "
            "for each JPEG grid origin:\n");
     for (int j=0; j<8; j++) {

@@ -196,7 +196,6 @@ int main(int argc, char **argv) {
 
     /* print global output */
     int nb_grids = 0;
-    printf("\n");
     printf("number of blocks: %i \n", N);
     printf("number of blocks (meaningful / non-meaningful) "
            "for each JPEG grid origin:\n");

@@ -34,7 +34,7 @@
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 int main(int argc, char **argv) {
-/* outputs */
+    /* outputs */
     FILE *list_blocks_file ;
     list_blocks_file = fopen("./list_blocks.txt", "w");
 
@@ -44,10 +44,10 @@ int main(int argc, char **argv) {
     FILE *nonmeaningful;
     nonmeaningful = fopen("./nonmeaningful.txt", "w");
 
-/* inputs */
+    /* inputs */
     if (argc < 3) error ("use: main <image> <block_size>");
 
-/* read input parameters */
+    /* read input parameters */
     double *input = NULL; // input image
     int X,Y,C;
     input = iio_read_image_double_split(argv[1], &X, &Y, &C);
@@ -56,25 +56,25 @@ int main(int argc, char **argv) {
     if (block_size < 0 || block_size > X || block_size > Y)
         error("0 < block_size <= min(height, width)");
 
-/* computed values */
+    /* computed values */
     int nb_block_X = X / block_size; int nb_block_Y = Y / block_size;
 
     double logNT = log10(nb_block_X * (nb_block_X+1) / 2.0) +
         log10(nb_block_Y * (nb_block_Y+1) / 2.0) + log10(16.0);
 
-/* work on Y channel */
+    /* work on Y channel */
     double *image = xcalloc(X*Y,sizeof(double)); // I
     rgb2y(input, image, X, Y, C);
 
-/* compute absolute value of cross_difference */
+    /* compute absolute value of cross_difference */
     double *cross_diff = xcalloc(X*Y,sizeof(double)); // dI
     cross_difference(image, cross_diff, X, Y);
 
-/* visual results */
+    /* visual results */
     int result_block[8*8] = {0}; // meaningful votes
     int ballot_block[8*8] = {0}; // all votes
 
-/* results */
+    /* results */
     int area = 0;
     coord index = {0,0};
     blockvote** list_Bv = xcalloc(nb_block_X * nb_block_Y, sizeof(blockvote*));
@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
         list_Bv[i] = xcalloc(area, sizeof(blockvote));
     }
 
-/* work on several blocks */
+    /* work on several blocks */
 #pragma omp parallel
     {
         int ii,jj;
@@ -142,7 +142,7 @@ int main(int argc, char **argv) {
         }
     }
 
-/* print print */
+    /* print print */
     double best_log_nfa = DBL_MAX;
     double worst_log_nfa = -DBL_MAX;
     double mean_log_nfa;
@@ -154,38 +154,38 @@ int main(int argc, char **argv) {
     int incr = 0;
     couple sum = {0,0};
 
-/* go through each block */
+    /* go through each block */
     for (int i=0; i<nb_block_X*nb_block_Y; i++) {
         index.x = i % nb_block_X;
         index.y = i / nb_block_X;
         area = (nb_block_X - index.x) * (nb_block_Y - index.y);
 
         for (int j=0; j<area; j++) {
-/* print result for each block */
+            /* print result for each block */
             fprintf(list_blocks_file, "Block[%i][%i]:\n", i, j);
             print_results(&list_Bv[i][j], list_blocks_file);
 
-/* NFA sorting */
+            /* NFA sorting */
             list_NFA[incr] = list_Bv[i][j].lnfa;
             incr ++;
 
             sum.x += list_Bv[i][j].lnfa.x;
             sum.y += list_Bv[i][j].lnfa.y;
             best_log_nfa = MIN(best_log_nfa, MAX(list_Bv[i][j].lnfa.x,
-                                                 list_Bv[i][j].lnfa.y));
+                        list_Bv[i][j].lnfa.y));
 
             if (list_Bv[i][j].meaningful) {
                 worst_log_nfa = MAX(worst_log_nfa, MAX(list_Bv[i][j].lnfa.x,
-                                                       list_Bv[i][j].lnfa.y));
+                            list_Bv[i][j].lnfa.y));
 
-/* find main grid */
+                /* find main grid */
                 if (maingrid.x == -1 || maingrid.y == -1)
                     maingrid = list_Bv[i][j].grid;
                 else if (maingrid.x != list_Bv[i][j].grid.x &&
-                         maingrid.y != list_Bv[i][j].grid.y) {
+                        maingrid.y != list_Bv[i][j].grid.y) {
                     if (result_block[maingrid.x + maingrid.y*8]
-                        <= result_block[list_Bv[i][j].grid.x
-                                        + list_Bv[i][j].grid.y*8]) {
+                            <= result_block[list_Bv[i][j].grid.x
+                            + list_Bv[i][j].grid.y*8]) {
                         fprintf(list_blocks_file, "Main grid changed! \n");
                         maingrid = list_Bv[i][j].grid;
                     }
@@ -194,12 +194,12 @@ int main(int argc, char **argv) {
         }
     }
 
-/* print global output */
+    /* print global output */
     int nb_grids = 0;
     printf("\n");
     printf("number of blocks: %i \n", N);
-    printf("========================================"
-                                "========================================\n");
+    printf("number of blocks (meaningful / non-meaningful) "
+           "for each JPEG grid origin:\n");
     for (int j=0; j<8; j++) {
         for (int i=0; i<8; i++) {
             printf("%4i/%-4i ", result_block[i+j*8], ballot_block[i+j*8]);
@@ -208,29 +208,28 @@ int main(int argc, char **argv) {
         }
         printf("\n");
     }
-    printf("========================================"
-                                "========================================\n");
-
-    printf("number of different meaningful grids: %d\n\n", nb_grids);
+    printf("number of different meaningful grids: %d\n", nb_grids);
 
     mean_log_nfa = MAX(sum.x/N, sum.y/N);
 
     if (worst_log_nfa != -DBL_MAX)
-        printf("\n");
-        printf("worst meaningful NFA = 10^%g\n",
-                worst_log_nfa);
+        printf("worst meaningful NFA = 10^%g\n",worst_log_nfa);
     printf("best NFA = 10^%g\n", best_log_nfa);
     printf("mean NFA = 10^%g\n", mean_log_nfa);
-    printf("\n");
 
     if (maingrid.x != -1 && maingrid.y != -1)
-        printf("detected grid origin %d %d\n \n",
-                maingrid.x, maingrid.y);
+        printf("main grid origin %d %d\n\n", maingrid.x, maingrid.y);
     else
-        printf("grid origin NOT found\n \n");
+        printf("main grid origin NOT found\n\n");
 
+    if (nb_grids > 1)
+        printf("more than one meaningful grid, possible forgery detected!\n");
 
-/* save images */
+    if (maingrid.x != -1 && maingrid.y != -1 &&
+        (maingrid.x != 0 || maingrid.y != 0))
+        printf("main grid different from (0,0), possible crop detected!\n");
+
+    /* save images */
     for (int i=0; i<X*Y; i++)
         cross_diff[i] *= 20.0;
 
@@ -238,12 +237,12 @@ int main(int argc, char **argv) {
     iio_write_image_int_vec("ballot_block.png", ballot_block, 8, 8, 1);
     iio_write_image_int_vec("result_block.png", result_block, 8, 8, 1);
 
-/* save txt files */
+    /* save txt files */
     fclose(list_blocks_file);
     fclose(meaningful_none0);
     fclose(nonmeaningful);
 
-/* free memory */
+    /* free memory */
     free(input);
     free(image);
     free(cross_diff);

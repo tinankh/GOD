@@ -201,7 +201,7 @@ int main(int argc, char **argv) {
     fprintf(global_result_file, "number of blocks: %i \n", N);
     for (int j=0; j<8; j++) {
         for (int i=0; i<8; i++)
-            fprintf(global_result_file, "%8i/%i ", result_block[i+j*8],
+            fprintf(global_result_file, "%4i/%-4i ", result_block[i+j*8],
                     ballot_block[i+j*8]);
         fprintf(global_result_file,"\n");
     }
@@ -214,7 +214,6 @@ int main(int argc, char **argv) {
         fprintf(global_result_file, "worst meaningful NFA = 10^%g\n",
                 worst_log_nfa);
     fprintf(global_result_file, "best NFA = 10^%g\n", best_log_nfa);
-    fprintf(global_result_file, "\n");
     fprintf(global_result_file, "mean NFA = 10^%g\n", mean_log_nfa);
     fprintf(global_result_file, "\n");
 

@@ -35,14 +35,14 @@
 
 int main(int argc, char **argv) {
 /* outputs */
-    FILE *global_result_file ;
-    global_result_file = fopen("./global_result.txt", "w");
+    FILE *list_blocks_file ;
+    list_blocks_file = fopen("./list_blocks.txt", "w");
 
-    FILE *significant_none0;
-    significant_none0 = fopen("./significant_n0.txt", "w");
+    FILE *meaningful_none0;
+    meaningful_none0 = fopen("./meaningful_n0.txt", "w");
 
-    FILE *insignificant;
-    insignificant = fopen("./insignificant.txt", "w");
+    FILE *nonmeaningful;
+    nonmeaningful = fopen("./nonmeaningful.txt", "w");
 
 /* inputs */
     if (argc < 3) error ("use: main <image> <block_size>");
@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
     cross_difference(image, cross_diff, X, Y);
 
 /* visual results */
-    int result_block[8*8] = {0}; // significant votes
+    int result_block[8*8] = {0}; // meaningful votes
     int ballot_block[8*8] = {0}; // all votes
 
 /* results */
@@ -113,19 +113,19 @@ int main(int argc, char **argv) {
 
                         vote(&Bv, cross_diff, X, Y, logNT);
 
-                        /* none significant */
+                        /* none meaningful */
                         _ballot_block[Bv.grid.x + Bv.grid.y*8] ++;
 
-                        /* significant */
-                        if (Bv.significant) {
+                        /* meaningful */
+                        if (Bv.meaningful) {
                             _result_block[Bv.grid.x + Bv.grid.y*8] ++;
                             if (Bv.grid.x + Bv.grid.y*8 != 0) {
-                                fprintf(significant_none0, "%d,%d,%d,%d\n",
+                                fprintf(meaningful_none0, "%d,%d,%d,%d\n",
                                         Bv.coord_a.x, Bv.coord_a.y,
                                         Bv.coord_b.x, Bv.coord_b.y);
                             }
                         } else {
-                            fprintf(insignificant, "%d,%d,%d,%d\n",
+                            fprintf(nonmeaningful, "%d,%d,%d,%d\n",
                                     Bv.coord_a.x, Bv.coord_a.y,
                                     Bv.coord_b.x, Bv.coord_b.y);
                         }
@@ -162,8 +162,8 @@ int main(int argc, char **argv) {
 
         for (int j=0; j<area; j++) {
 /* print result for each block */
-            printf("Block[%i][%i]:\n", i, j);
-            print_results(&list_Bv[i][j]);
+            fprintf(list_blocks_file, "Block[%i][%i]:\n", i, j);
+            print_results(&list_Bv[i][j], list_blocks_file);
 
 /* NFA sorting */
             list_NFA[incr] = list_Bv[i][j].lnfa;
@@ -174,7 +174,7 @@ int main(int argc, char **argv) {
             best_log_nfa = MIN(best_log_nfa, MAX(list_Bv[i][j].lnfa.x,
                                                  list_Bv[i][j].lnfa.y));
 
-            if (list_Bv[i][j].significant) {
+            if (list_Bv[i][j].meaningful) {
                 worst_log_nfa = MAX(worst_log_nfa, MAX(list_Bv[i][j].lnfa.x,
                                                        list_Bv[i][j].lnfa.y));
 
@@ -186,7 +186,7 @@ int main(int argc, char **argv) {
                     if (result_block[maingrid.x + maingrid.y*8]
                         <= result_block[list_Bv[i][j].grid.x
                                         + list_Bv[i][j].grid.y*8]) {
-                        printf("Main grid changed! \n");
+                        fprintf(list_blocks_file, "Main grid changed! \n");
                         maingrid = list_Bv[i][j].grid;
                     }
                 }
@@ -195,33 +195,39 @@ int main(int argc, char **argv) {
     }
 
 /* print global output */
-    fprintf(global_result_file,"\n");
-    fprintf(global_result_file,"=================================\
-===========================================================\n");
-    fprintf(global_result_file, "number of blocks: %i \n", N);
+    int nb_grids = 0;
+    printf("\n");
+    printf("number of blocks: %i \n", N);
+    printf("========================================"
+                                "========================================\n");
     for (int j=0; j<8; j++) {
-        for (int i=0; i<8; i++)
-            fprintf(global_result_file, "%4i/%-4i ", result_block[i+j*8],
-                    ballot_block[i+j*8]);
-        fprintf(global_result_file,"\n");
+        for (int i=0; i<8; i++) {
+            printf("%4i/%-4i ", result_block[i+j*8], ballot_block[i+j*8]);
+            if (result_block[i+j*8] > 0)
+                nb_grids ++;
+        }
+        printf("\n");
     }
-    fprintf(global_result_file,"=================================\
-===========================================================\n");
+    printf("========================================"
+                                "========================================\n");
+
+    printf("number of different meaningful grids: %d\n\n", nb_grids);
 
     mean_log_nfa = MAX(sum.x/N, sum.y/N);
 
     if (worst_log_nfa != -DBL_MAX)
-        fprintf(global_result_file, "worst meaningful NFA = 10^%g\n",
+        printf("\n");
+        printf("worst meaningful NFA = 10^%g\n",
                 worst_log_nfa);
-    fprintf(global_result_file, "best NFA = 10^%g\n", best_log_nfa);
-    fprintf(global_result_file, "mean NFA = 10^%g\n", mean_log_nfa);
-    fprintf(global_result_file, "\n");
+    printf("best NFA = 10^%g\n", best_log_nfa);
+    printf("mean NFA = 10^%g\n", mean_log_nfa);
+    printf("\n");
 
     if (maingrid.x != -1 && maingrid.y != -1)
-        fprintf(global_result_file, "detected grid origin %d %d\n \n",
+        printf("detected grid origin %d %d\n \n",
                 maingrid.x, maingrid.y);
     else
-        fprintf(global_result_file, "grid origin NOT found\n \n");
+        printf("grid origin NOT found\n \n");
 
 
 /* save images */
@@ -233,9 +239,9 @@ int main(int argc, char **argv) {
     iio_write_image_int_vec("result_block.png", result_block, 8, 8, 1);
 
 /* save txt files */
-    fclose(global_result_file);
-    fclose(significant_none0);
-    fclose(insignificant);
+    fclose(list_blocks_file);
+    fclose(meaningful_none0);
+    fclose(nonmeaningful);
 
 /* free memory */
     free(input);

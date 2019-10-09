@@ -20,7 +20,7 @@ typedef struct _blockvote {
     coord coord_a; // top left
     coord coord_b; // bottom right
     coord size;
-    int significant;
+    int meaningful;
 } blockvote;
 
 int cross_difference(double *image, double *cross_diff, int X, int Y);
@@ -29,6 +29,6 @@ void compute_NFA(blockvote *Bv, double logNT);
 
 int vote(blockvote *Bv, double *cross_diff, int X, int Y, double logNT);
 
-void print_results(blockvote *Bv);
+void print_results(blockvote *Bv, FILE *list_blocks_file);
 
 #endif

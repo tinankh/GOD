@@ -88,27 +88,32 @@ int vote(blockvote *Bv, double *cross_diff,
     compute_NFA(Bv, logNT);
 
     if (Bv->lnfa.x < 0.0 && Bv->lnfa.y < 0.0)
-        Bv->significant = 1;
+        Bv->meaningful = 1;
 
     return 1;
 }
 
-void print_results(blockvote *Bv) {
+void print_results(blockvote *Bv, FILE *list_blocks_file) {
     int i;
 
-    printf("===========================================================\n");
-    printf("votes by columns: ");
-    for (i=0; i<8; i++) printf("%d ",Bv->vote_col[i]);
-    printf("\n");
-    printf("votes by rows:    ");
-    for (i=0; i<8; i++) printf("%d ",Bv->vote_row[i]);
-    printf("\n");
-    printf("nx %d kx %d nfa_x 10^%g\n",Bv->nx,Bv->kx,Bv->lnfa.x);
-    printf("ny %d ky %d nfa_y 10^%g\n",Bv->ny,Bv->ky,Bv->lnfa.y);
-    printf("block origin %d %d\n",Bv->grid.x,Bv->grid.y);
+    fprintf(list_blocks_file, "========================================"
+            "========================================\n");
+    fprintf(list_blocks_file, "votes by columns: ");
+    for (i=0; i<8; i++) fprintf(list_blocks_file, "%d ", Bv->vote_col[i]);
+    fprintf(list_blocks_file, "\n");
+    fprintf(list_blocks_file, "votes by rows:    ");
+    for (i=0; i<8; i++) fprintf(list_blocks_file, "%d ", Bv->vote_row[i]);
+    fprintf(list_blocks_file, "\n");
+    fprintf(list_blocks_file, "nx %d kx %d nfa_x 10^%g\n",
+            Bv->nx,Bv->kx, Bv->lnfa.x);
+    fprintf(list_blocks_file, "ny %d ky %d nfa_y 10^%g\n",
+            Bv->ny,Bv->ky, Bv->lnfa.y);
+    fprintf(list_blocks_file, "block origin %d %d\n",
+            Bv->grid.x, Bv->grid.y);
     if (Bv->lnfa.x < 0.0 && Bv->lnfa.y < 0.0)
-        printf("JPEG grid found!\n");
+        fprintf(list_blocks_file, "JPEG grid found!\n");
     else
-        printf("JPEG grid NOT found!\n");
-    printf("===========================================================\n \n");
+        fprintf(list_blocks_file, "JPEG grid NOT found!\n");
+    fprintf(list_blocks_file, "========================================"
+            "========================================\n\n");
 }

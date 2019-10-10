@@ -29,13 +29,13 @@ openmp: all
 
 test: $(EXEC1) $(EXEC2)
 	@echo
-	@echo test on pelican.ppm
+	@echo test on pelican.png
 	@echo ===================
-	$(EXEC0) pelican.ppm 128
+	$(EXEC0) pelican.png 128
 	@echo
-	@echo test on roma.pgm
+	@echo test on roma.png
 	@echo ================
-	$(EXEC0) roma.pgm 128
+	$(EXEC0) roma.png 128
 
 clean:
 	$(RM) -rf list_blocks.txt meaningful_n0.txt nonmeaningful.txt

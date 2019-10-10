@@ -9,8 +9,8 @@ Version 2 - July 2019
 Local JPEG Grid Detector via Blocking Artifacts
 
 
-by rafael grompone von gioi <grompone@gmail.com>
-and tina nikoukhah <tina.nikoukhah@gmail.com>,
+by Rafael Grompone von Gioi <grompone@gmail.com>
+and Tina Nikoukhah <tina.nikoukhah@gmail.com>,
 
 
 Introduction
@@ -32,13 +32,13 @@ The following libraries are required for image input/output:
 Files
 -----
 
-- src/main.c: Main code.
+- src/god.c: Main code.
 
-- src/acontrario.c and include/acontrario.h: A contrario formulation.
+- src/acontrario.c and src/acontrario.h: A contrario formulation.
 
-- src/jpegblocks.c and include/jpegblocks.h: Functions used for the voting process.
+- src/jpegblocks.c and src/jpegblocks.h: Functions used for the voting process.
 
-- src/misc.c and include/misc.h: Useful functions.
+- src/misc.c and src/misc.h: Useful functions.
 
 - README.md: this file.
 
@@ -46,11 +46,14 @@ Files
 
 - Makefile: Compilation instructions.
 
-- src/iio.c and include/iio.h: [iio](https://github.com/mnhrdt/iio) code and header.
+- src/iio.c and src/iio.h: [iio](https://github.com/mnhrdt/iio) code and header.
 
-- *.{ppm,pgm}: Test images.
+- *.png: Test images.
 
 - create_svg.py: Creates final masks from txt files to svg files.
+```
+python create_svg.py meaningful_n0.txt <image> > <output.svg>
+```
 
 
 Compiling
@@ -76,49 +79,42 @@ This should print the following message:
 ```
 test on pelican.ppm
 ===================
-./bin/main pelican.ppm 128 > temp
-cat global_result.txt
-
-============================================================================================
+./god pelican.ppm 128
 number of blocks: 100
-       0/0        0/0        0/0        0/0        0/0        0/0       99/100        0/0
-       0/0        0/0        0/0        0/0        0/0        0/0        0/0        0/0
-       0/0        0/0        0/0        0/0        0/0        0/0        0/0        0/0
-       0/0        0/0        0/0        0/0        0/0        0/0        0/0        0/0
-       0/0        0/0        0/0        0/0        0/0        0/0        0/0        0/0
-       0/0        0/0        0/0        0/0        0/0        0/0        0/0        0/0
-       0/0        0/0        0/0        0/0        0/0        0/0        0/0        0/0
-       0/0        0/0        0/0        0/0        0/0        0/0        0/0        0/0
-============================================================================================
+number of blocks (meaningful / non-meaningful) for each JPEG grid origin:
+   0/0       0/0       0/0       0/0       0/0       0/0      99/100     0/0
+   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
+   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
+   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
+   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
+   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
+   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
+   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
+number of different meaningful grids: 1
 worst meaningful NFA = 10^-1.73232
 best NFA = 10^-213.367
-
 mean NFA = 10^-47.9746
+main grid origin 6 0
 
-detected grid origin 6 0
-
+main grid different from (0,0), possible crop detected!
 
 test on roma.pgm
 ================
-./bin/main roma.pgm 128 >> temp
-cat global_result.txt
-
-============================================================================================
+./god roma.pgm 128
 number of blocks: 100
-       0/0        0/3        0/0        0/2        0/1        0/0        0/1        0/1
-       0/0        0/0        0/0        0/0        0/1        0/0        0/0        0/3
-       0/0        0/0        0/0        0/0        0/2        0/2        0/2        0/0
-       0/0        0/0        0/0        0/0        0/1        0/0        0/0        0/2
-       0/0        0/0        0/0        0/0        0/5        0/0        0/1        0/3
-       0/0        0/0        0/6        0/1        0/16        0/4        0/4        0/12
-       0/0        0/2        0/0        0/0        0/1        0/0        0/0        0/7
-       0/0        0/0        0/1        0/0        0/0        0/1        0/0        0/15
-============================================================================================
+number of blocks (meaningful / non-meaningful) for each JPEG grid origin:
+   0/0       0/3       0/0       0/2       0/1       0/0       0/1       0/1
+   0/0       0/0       0/0       0/0       0/1       0/0       0/0       0/3
+   0/0       0/0       0/0       0/0       0/2       0/2       0/2       0/0
+   0/0       0/0       0/0       0/0       0/1       0/0       0/0       0/2
+   0/0       0/0       0/0       0/0       0/5       0/0       0/1       0/3
+   0/0       0/0       0/6       0/1       0/16      0/4       0/4       0/12
+   0/0       0/2       0/0       0/0       0/1       0/0       0/0       0/7
+   0/0       0/0       0/1       0/0       0/0       0/1       0/0       0/15
+number of different meaningful grids: 0
 best NFA = 10^1.91207
-
 mean NFA = 10^2.31863
-
-grid origin NOT found
+main grid origin NOT found
 ```
 
 Running
@@ -126,12 +122,12 @@ Running
 
 The program is executed as:
 
-    bin/main
+    god
 
 (use ./bin/main if the command is not included in the current path).
 That should print the following usage:
 
-  Error: use: main <image> <block_size>
+  Error: use: god <image> <block_size>
 
 The command takes an input image as argument. Any image file format handled by
 Enric Meinhardt-Llopis' IIO library can be used. This includes, for example,

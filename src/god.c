@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
     nonmeaningful = fopen("nonmeaningful.txt", "w");
 
     /* inputs */
-    if (argc < 3) error ("use: main <image> <block_size>");
+    if (argc < 3) error ("use: god <image> <window_size>");
 
     /* read input parameters */
     double *input = NULL; // input image

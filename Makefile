@@ -38,7 +38,7 @@ test: $(EXEC1) $(EXEC2)
 	$(EXEC0) roma.pgm 128
 
 clean:
-	$(RM) -rf *.png list_blocks.txt meaningful_n0.txt nonmeaningful.txt
+	$(RM) -rf list_blocks.txt meaningful_n0.txt nonmeaningful.txt
 	$(RM) -rf $(BUILDDIR) $(EXEC) god
 
 .PHONY: clean

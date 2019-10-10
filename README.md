@@ -50,7 +50,7 @@ Files
 
 - *.png: Test images.
 
-- create_svg.py: Creates final masks from txt files to svg files.
+- create_svg.py: Creates final masks from txt files to svg files. A typical execution is as follows:
 ```
 python create_svg.py meaningful_n0.txt <image> > <output.svg>
 ```
@@ -121,22 +121,25 @@ Running
 -------
 
 The program is executed as:
-
+```
     god
+```
 
-(use ./bin/main if the command is not included in the current path).
+(use ./god if the command is not included in the current path).
 That should print the following usage:
 
+```
   Error: use: god <image> <block_size>
+```
 
 The command takes an input image as argument. Any image file format handled by
 Enric Meinhardt-Llopis' IIO library can be used. This includes, for example,
 PNG, JPG, TIFF, PPM, PGM.
 
 A typical execution is as follows:
-
-  ./bin/main pelican.ppm 128
-
+```
+  ./god pelican.ppm 128
+```
 
 Copyright and License
 ---------------------

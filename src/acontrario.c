@@ -30,7 +30,7 @@
 
 /**
  * \brief   Computes the logarithm of NFA to base 10, NFA = NT.b(n,k,p)
- * @param	    n total number of votes
+ * @param       n total number of votes
  * @param       k votes for best origin coordinate
  * @param       p probability
  * @param       logNT    logarithm of Number of Tests

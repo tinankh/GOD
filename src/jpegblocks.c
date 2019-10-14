@@ -37,7 +37,6 @@ int cross_difference(double *image, double *cross_diff, int X, int Y) {
     return 1;
 }
 
-
 void compute_NFA(blockvote *Bv, double logNT) {
     int i;
     Bv->nx = 0;
@@ -48,13 +47,13 @@ void compute_NFA(blockvote *Bv, double logNT) {
     for (i=0; i<8; i++) {
         Bv->nx += Bv->vote_col[i];
         if (Bv->vote_col[i] > Bv->kx) {
-/* new max of votes in x */
+            /* new max of votes in x */
             Bv->kx = Bv->vote_col[i];
             Bv->grid.x = (i+1) % 8;
         }
         Bv->ny += Bv->vote_row[i];
         if (Bv->vote_row[i] > Bv->ky) {
-/* new max of votes in y */
+            /* new max of votes in y */
             Bv->ky = Bv->vote_row[i];
             Bv->grid.y = (i+1) % 8;
         }

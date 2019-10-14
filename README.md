@@ -70,16 +70,16 @@ or if you want the code to be parallel
 from the directory where the source codes and the Makefile are located.
 
 To verify a correct compilation you can apply the algorithm to the test images
-'pelican.ppm' and 'roma.pgm'. This can be done by executing:
+'pelican.png' and 'roma.png'. This can be done by executing:
 ```bash
   make test
 ```
 
 This should print the following message:
 ```
-test on pelican.ppm
+test on pelican.png
 ===================
-./god pelican.ppm 128
+./god pelican.png 128
 number of blocks: 100
 number of blocks (meaningful / non-meaningful) for each JPEG grid origin:
    0/0       0/0       0/0       0/0       0/0       0/0      99/100     0/0
@@ -98,9 +98,9 @@ main grid origin 6 0
 
 main grid different from (0,0), possible crop detected!
 
-test on roma.pgm
+test on roma.png
 ================
-./god roma.pgm 128
+./god roma.png 128
 number of blocks: 100
 number of blocks (meaningful / non-meaningful) for each JPEG grid origin:
    0/0       0/3       0/0       0/2       0/1       0/0       0/1       0/1
@@ -138,7 +138,7 @@ PNG, JPG, TIFF, PPM, PGM.
 
 A typical execution is as follows:
 ```
-  ./god pelican.ppm 128
+  ./god pelican.png 128
 ```
 
 Copyright and License

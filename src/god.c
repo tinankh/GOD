@@ -221,11 +221,17 @@ int main(int argc, char **argv) {
         printf("main grid origin NOT found\n\n");
 
     if (nb_grids > 1)
-        printf("more than one meaningful grid, possible forgery detected!\n");
+        printf("more than one meaningful grid, "
+               "this may indicate the presence of a forgery!\n");
 
     if (maingrid.x != -1 && maingrid.y != -1 &&
         (maingrid.x != 0 || maingrid.y != 0))
-        printf("main grid different from (0,0), possible crop detected!\n");
+        printf("main grid different from (0,0), "
+               "the image may have been cropped!\n");
+
+    if ( nb_grids <= 1 && ( (maingrid.x == -1 && maingrid.y == -1 ) ||
+                            (maingrid.x ==  0 && maingrid.y ==  0 ) ) )
+        printf("no suspicious trace found in the image\n");
 
     /* save images */
     for (int i=0; i<X*Y; i++)

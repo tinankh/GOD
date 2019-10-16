@@ -96,7 +96,7 @@ best NFA = 10^-213.367
 mean NFA = 10^-47.9746
 main grid origin 6 0
 
-main grid different from (0,0), possible crop detected!
+main grid different from (0,0), the image may have been cropped!
 
 test on roma.png
 ================
@@ -115,6 +115,8 @@ number of different meaningful grids: 0
 best NFA = 10^1.91207
 mean NFA = 10^2.31863
 main grid origin NOT found
+
+no suspicious traces found in the image with the performed analysis.
 ```
 
 Running

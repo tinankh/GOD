@@ -231,7 +231,8 @@ int main(int argc, char **argv) {
 
     if ( nb_grids <= 1 && ( (maingrid.x == -1 && maingrid.y == -1 ) ||
                             (maingrid.x ==  0 && maingrid.y ==  0 ) ) )
-        printf("no suspicious trace found in the image\n");
+        printf("no suspicious traces found in the image "
+               "with the performed analysis.\n");
 
     /* save images */
     for (int i=0; i<X*Y; i++)

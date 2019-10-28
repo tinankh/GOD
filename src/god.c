@@ -33,16 +33,6 @@
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 int main(int argc, char **argv) {
-    /* outputs */
-    FILE *list_blocks_file ;
-    list_blocks_file = fopen("list_blocks.txt", "w");
-
-    FILE *meaningful_none0;
-    meaningful_none0 = fopen("meaningful_n0.txt", "w");
-
-    FILE *nonmeaningful;
-    nonmeaningful = fopen("nonmeaningful.txt", "w");
-
     /* inputs */
     if (argc < 3) error ("use: god <image> <window_size>");
 
@@ -52,8 +42,20 @@ int main(int argc, char **argv) {
     input = iio_read_image_double_split(argv[1], &X, &Y, &C);
 
     int block_size = atoi(argv[2]);
-    if (block_size < 0 || block_size > X || block_size > Y)
-        error("0 < block_size <= min(height, width)");
+
+    if (block_size <= 0 || block_size > X || block_size > Y)
+        error("window_size should be an integer \n"
+              "0 <= window_size <= min(height, width)");
+
+    /* outputs */
+    FILE *list_blocks_file ;
+    list_blocks_file = fopen("list_blocks.txt", "w");
+
+    FILE *meaningful_none0;
+    meaningful_none0 = fopen("meaningful_n0.txt", "w");
+
+    FILE *nonmeaningful;
+    nonmeaningful = fopen("nonmeaningful.txt", "w");
 
     /* computed values */
     int nb_block_X = X / block_size; int nb_block_Y = Y / block_size;
@@ -93,8 +95,8 @@ int main(int argc, char **argv) {
         blockvote Bv;
 
         /* visual results */
-        int _result_block[8*8] = {0};
-        int _ballot_block[8*8] = {0};
+        int significantvotes[8*8] = {0};
+        int allvotes[8*8] = {0};
 
 #pragma omp for nowait
         for(int x0=0; x0<X; x0+=block_size)
@@ -112,12 +114,17 @@ int main(int argc, char **argv) {
 
                         vote(&Bv, cross_diff, X, Y, logNT);
 
+                        compute_NFA(&Bv, logNT);
+
+                        if (Bv.lnfa.x < 0.0 && Bv.lnfa.y < 0.0)
+                            Bv.meaningful = 1;
+
                         /* none meaningful */
-                        _ballot_block[Bv.grid.x + Bv.grid.y*8] ++;
+                        allvotes[Bv.grid.x + Bv.grid.y*8] ++;
 
                         /* meaningful */
                         if (Bv.meaningful) {
-                            _result_block[Bv.grid.x + Bv.grid.y*8] ++;
+                            significantvotes[Bv.grid.x + Bv.grid.y*8] ++;
                             if (Bv.grid.x + Bv.grid.y*8 != 0) {
                                 fprintf(meaningful_none0, "%d,%d,%d,%d\n",
                                         Bv.coord_a.x, Bv.coord_a.y,
@@ -135,8 +142,8 @@ int main(int argc, char **argv) {
 #pragma omp critical
         {
             for (int i=0; i<8*8; i++) {
-                ballot_block[i] += _ballot_block[i];
-                result_block[i] += _result_block[i];
+                ballot_block[i] += allvotes[i];
+                result_block[i] += significantvotes[i];
             }
         }
     }
@@ -171,20 +178,20 @@ int main(int argc, char **argv) {
             sum.x += list_Bv[i][j].lnfa.x;
             sum.y += list_Bv[i][j].lnfa.y;
             best_log_nfa = MIN(best_log_nfa, MAX(list_Bv[i][j].lnfa.x,
-                        list_Bv[i][j].lnfa.y));
+                                                 list_Bv[i][j].lnfa.y));
 
             if (list_Bv[i][j].meaningful) {
                 worst_log_nfa = MAX(worst_log_nfa, MAX(list_Bv[i][j].lnfa.x,
-                            list_Bv[i][j].lnfa.y));
+                                                       list_Bv[i][j].lnfa.y));
 
                 /* find main grid */
                 if (maingrid.x == -1 || maingrid.y == -1)
                     maingrid = list_Bv[i][j].grid;
                 else if (maingrid.x != list_Bv[i][j].grid.x &&
-                        maingrid.y != list_Bv[i][j].grid.y) {
+                         maingrid.y != list_Bv[i][j].grid.y) {
                     if (result_block[maingrid.x + maingrid.y*8]
-                            <= result_block[list_Bv[i][j].grid.x
-                            + list_Bv[i][j].grid.y*8]) {
+                        <= result_block[list_Bv[i][j].grid.x
+                                        + list_Bv[i][j].grid.y*8]) {
                         fprintf(list_blocks_file, "Main grid changed!\n");
                         maingrid = list_Bv[i][j].grid;
                     }

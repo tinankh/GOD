@@ -46,16 +46,15 @@ void * xcalloc(size_t n_items, size_t size) {
     return p;
 }
 
-int grayscale(double *input, double *image, int X, int Y, int C) {
+void grayscale(double *input, double *image, int X, int Y, int C) {
     int x, y, c;
     for (x=0; x<X; x++)
         for (y=0; y<Y; y++)
             for (c=0; c<C; c++)
                 image[x+y*X] += input[x+y*X+c*X*Y];
-    return 1;
 }
 
-int rgb2y(double *input, double *image, int X, int Y, int C) {
+void rgb2y(double *input, double *image, int X, int Y, int C) {
     int x, y;
     if (C >= 3) {
         for(x=0; x<X; x++)
@@ -66,5 +65,4 @@ int rgb2y(double *input, double *image, int X, int Y, int C) {
     }
     else
         grayscale(input, image, X, Y, C);
-    return 1;
 }

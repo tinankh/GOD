@@ -27,16 +27,22 @@
 #include "jpegblocks.h"
 #include "misc.h"
 
-int cross_difference(double *image, double *cross_diff, int X, int Y) {
+
+/**
+ *   Computes the cross-difference of an image
+ */
+void cross_difference(double *image, double *cross_diff, int X, int Y) {
     int x, y;
     for (x=0; x<(X-1); x++)
         for (y=0; y<(Y-1); y++) {
             cross_diff[x+y*X] = fabs(image[x+y*X] + image[x+1+(y+1)*X]
                                      - image[x+1+y*X] - image[x+(y+1)*X]);
         }
-    return 1;
 }
 
+/**
+ *    Computes the NFA of a blockvote
+ */
 void compute_NFA(blockvote *Bv, double logNT) {
     int i;
     Bv->nx = 0;
@@ -66,7 +72,10 @@ void compute_NFA(blockvote *Bv, double logNT) {
     Bv->lnfa.y = log_nfa((int)(w*h/16), Bv->ky/2, (double)Bv->ny/(w*h), logNT);
 }
 
-int vote(blockvote *Bv, double *cross_diff,
+/**
+ *   Performs the voting process of a blockvote
+ */
+void vote(blockvote *Bv, double *cross_diff,
          int X, int Y, double logNT) {
     int x, y, i;
     for (i=0; i<8; i++)
@@ -84,12 +93,6 @@ int vote(blockvote *Bv, double *cross_diff,
             }
         }
     }
-    compute_NFA(Bv, logNT);
-
-    if (Bv->lnfa.x < 0.0 && Bv->lnfa.y < 0.0)
-        Bv->meaningful = 1;
-
-    return 1;
 }
 
 void print_results(blockvote *Bv, FILE *list_blocks_file) {

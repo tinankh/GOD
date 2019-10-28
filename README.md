@@ -10,13 +10,19 @@ Local JPEG Grid Detector via Blocking Artifacts
 
 
 by Rafael Grompone von Gioi <grompone@gmail.com>
-and Tina Nikoukhah <tina.nikoukhah@gmail.com>,
+and Tina Nikoukhah <tina.nikoukhah@gmail.com>
 
 
 Introduction
 ------------
 
 This program implements a local a-contrario detector of the JPEG block origin.
+
+
+Online Demo
+------------
+
+[IPOL](https://ipolcore.ipol.im/demo/clientApp/demo.html?id=77777000029)
 
 
 Requirements

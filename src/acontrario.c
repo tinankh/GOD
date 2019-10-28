@@ -29,7 +29,7 @@
 #endif /* !M_LN10 */
 
 /**
- * \brief   Computes the logarithm of NFA to base 10, NFA = NT.b(n,k,p)
+ * @brief   Computes the logarithm of NFA to base 10, NFA = NT.b(n,k,p)
  * @param       n total number of votes
  * @param       k votes for best origin coordinate
  * @param       p probability
@@ -47,7 +47,7 @@ double log_nfa(int n, int k, double p, double logNT) {
     int i;
 
     if (n<0 || k<0 || k>n || p<0.0 || p>1.0) {
-        printf("wrong n(%i), k(%i) or p(%f) values in nfa()", n, k, p);
+        printf("wrong n(%i), k(%i) or p(%f) values in nfa()\n", n, k, p);
         error("wrong n(%i), k(%i) or p(%f) values in nfa()");
     }
 

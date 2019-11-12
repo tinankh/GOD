@@ -60,8 +60,7 @@ int main(int argc, char **argv) {
     /* computed values */
     int nb_block_X = X / block_size; int nb_block_Y = Y / block_size;
 
-    double logNT = log10(nb_block_X * (nb_block_X+1) / 2.0) +
-        log10(nb_block_Y * (nb_block_Y+1) / 2.0) + log10(16.0);
+    double logNT = log10(X*Y) + log10(16.0);
 
     /* work on Y channel */
     double *image = xcalloc(X*Y,sizeof(double)); // I

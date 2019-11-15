@@ -25,6 +25,6 @@ test: $(EXEC)
 clean:
 	$(RM) -rf $(EXEC)
 	$(RM) -rf list_blocks.txt meaningful_n0.txt nonmeaningful.txt
-	$(RM) -rf ballot_block.png cross_diff.png result_block.png
+	$(RM) -rf cross_diff.png luminance.png
 
 .PHONY: clean

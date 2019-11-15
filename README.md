@@ -58,7 +58,7 @@ Files
 
 - create_svg.py: Creates final masks from txt files to svg files. A typical execution is as follows:
 ```
-python create_svg.py meaningful_n0.txt <image> > <output.svg>
+python create_svg.py meaningful_n0.txt luminance.png > <output.svg>
 ```
 
 
@@ -83,46 +83,7 @@ To verify a correct compilation you can apply the algorithm to the test images
 
 This should print the following message:
 ```
-test on pelican.png
-===================
-./god pelican.png 128
-number of blocks: 100
-number of blocks (meaningful / non-meaningful) for each JPEG grid origin:
-   0/0       0/0       0/0       0/0       0/0       0/0      99/100     0/0
-   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
-   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
-   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
-   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
-   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
-   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
-   0/0       0/0       0/0       0/0       0/0       0/0       0/0       0/0
-number of different meaningful grids: 1
-worst meaningful NFA = 10^-1.73232
-best NFA = 10^-213.367
-mean NFA = 10^-47.9746
-main grid origin 6 0
 
-main grid different from (0,0), the image may have been cropped!
-
-test on roma.png
-================
-./god roma.png 128
-number of blocks: 100
-number of blocks (meaningful / non-meaningful) for each JPEG grid origin:
-   0/0       0/3       0/0       0/2       0/1       0/0       0/1       0/1
-   0/0       0/0       0/0       0/0       0/1       0/0       0/0       0/3
-   0/0       0/0       0/0       0/0       0/2       0/2       0/2       0/0
-   0/0       0/0       0/0       0/0       0/1       0/0       0/0       0/2
-   0/0       0/0       0/0       0/0       0/5       0/0       0/1       0/3
-   0/0       0/0       0/6       0/1       0/16      0/4       0/4       0/12
-   0/0       0/2       0/0       0/0       0/1       0/0       0/0       0/7
-   0/0       0/0       0/1       0/0       0/0       0/1       0/0       0/15
-number of different meaningful grids: 0
-best NFA = 10^1.91207
-mean NFA = 10^2.31863
-main grid origin NOT found
-
-no suspicious traces found in the image with the performed analysis.
 ```
 
 Running
@@ -137,7 +98,7 @@ The program is executed as:
 That should print the following usage:
 
 ```
-  Error: use: god <image> <block_size>
+  Error: use: god <image> <window_size>
 ```
 
 The command takes an input image as argument. Any image file format handled by

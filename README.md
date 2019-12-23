@@ -58,7 +58,7 @@ Files
 
 - create_svg.py: Creates final masks from txt files to svg files. A typical execution is as follows:
 ```
-python create_svg.py meaningful_n0.txt luminance.png > <output.svg>
+python create_svg.py luminance.png nonmeaningful.txt meaningful_n0.txt > <output.svg>
 ```
 
 

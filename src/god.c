@@ -190,6 +190,7 @@ int main(int argc, char **argv) {
                     maingrid = list_Bv[i][j].grid;
                 else if (maingrid.x != list_Bv[i][j].grid.x &&
                          maingrid.y != list_Bv[i][j].grid.y) {
+
                     if (result_block[maingrid.x + maingrid.y*8]
                         <= result_block[list_Bv[i][j].grid.x
                                         + list_Bv[i][j].grid.y*8]) {

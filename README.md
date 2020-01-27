@@ -180,7 +180,7 @@ For example, the line:
 1 1 200 200 -407.534 -330.733 0 0 
 
 ```
-
+means that the window starting at pixel (1,1) to (200,200) voted horizontally with a NFA at 10^-407.534 and vertically at 10^-330.733 for the grid origin (0,0).
 
 
 

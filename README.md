@@ -5,7 +5,7 @@ Version 1 - December 2017
 Automatic JPEG Grid Detection with Controlled False Alarms, and Its
 Image Forensic Applications
 
-Version 2 - July 2019
+Version 2 - January 2020
 Local JPEG Grid Detector via Blocking Artifacts
 
 
@@ -58,7 +58,7 @@ Files
 
 - create_svg.py: Creates final masks from txt files to svg files. A typical execution is as follows:
 ```
-python create_svg.py luminance.png nonmeaningful.txt meaningful_n0.txt > <output.svg>
+python create_svg.py luminance.png nonmeaningful.txt meaningful.txt > <output.svg>
 ```
 
 
@@ -83,7 +83,59 @@ To verify a correct compilation you can apply the algorithm to the test images
 
 This should print the following message:
 ```
+test on pelican.png
+===================
+./god pelican.png 128
+number of meaningful windows 35 of 36 (97 %)
+number of windows (meaningful votes) for each JPEG grid origin:
+      0       0       0       0       0       0      35       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+best log NFA for each JPEG grid origin:
+      -       -       -       -       -       -   -92.7       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+number of different meaningful grids: 1
+most meaningful grid origin 6 0 with NFA: 10^-92.6767
 
+most meaningful grid different from (0,0), the image may have been cropped!
+
+test on roma.png
+================
+./god roma.png 128
+number of meaningful windows 0 of 36 (0 %)
+number of windows (meaningful votes) for each JPEG grid origin:
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+      0       0       0       0       0       0       0       0
+best log NFA for each JPEG grid origin:
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+      -       -       -       -       -       -       -       -
+number of different meaningful grids: 0
+no meaningful grid found
+
+no suspicious traces found in the image with the performed analysis.
 ```
 
 Running

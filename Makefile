@@ -1,7 +1,7 @@
 EXEC=./god
 SRCDIR=src
 CFLAGS=-std=gnu99 -O3 $(OpenMP)
-LIB=-lpng -ltiff -ljpeg -lm $(OpenMP)
+LIB=-lpng -ltiff -ljpeg -lm
 SRC_FILES=$(wildcard $(SRCDIR)/*.c)
 
 all: $(EXEC)
@@ -24,7 +24,7 @@ test: $(EXEC)
 
 clean:
 	$(RM) -rf $(EXEC)
-	$(RM) -rf list_blocks.txt meaningful_n0.txt nonmeaningful.txt
+	$(RM) -rf list_windows.txt meaningful.txt nonmeaningful.txt
 	$(RM) -rf cross_diff.png luminance.png
 
 .PHONY: clean

@@ -46,10 +46,8 @@ double log_nfa(int n, int k, double p, double logNT) {
     double p_term = p / (1.0-p);
     int i;
 
-    if (n<0 || k<0 || k>n || p<0.0 || p>1.0) {
-        printf("wrong n(%i), k(%i) or p(%f) values in nfa()\n", n, k, p);
-        error("wrong n(%i), k(%i) or p(%f) values in nfa()");
-    }
+    if (n<0 || k<0 || k>n || p<0.0 || p>1.0)
+        error("wrong n(%i), k(%i) or p(%f) values in nfa()", n, k, p);
 
     if (n==0 || k==0) return logNT;
     if (n==k) return logNT + (double)n * log10(p);

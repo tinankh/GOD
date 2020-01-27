@@ -43,8 +43,7 @@ int main(int argc, char **argv) {
 
     int window_size = atoi(argv[2]);
 
-    if (window_size <= 0 || window_size > X-3 || window_size > Y-3
-        || window_size%8 != 0) {
+    if (window_size <= 0 || window_size > X-3 || window_size > Y-3) {
         if (window_size%8 !=0)
             error("window_size should be an integer multiple of 8 \n"
                   "0 <= window_size <= min(height, width)\n"

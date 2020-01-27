@@ -24,7 +24,7 @@ test: $(EXEC)
 
 clean:
 	$(RM) -rf $(EXEC)
-	$(RM) -rf list_windows.txt meaningful.txt nonmeaningful.txt
+	$(RM) -rf list_windows.txt
 	$(RM) -rf cross_diff.png luminance.png
 
 .PHONY: clean

@@ -42,7 +42,7 @@ Files
 
 - src/acontrario.c and src/acontrario.h: A contrario formulation.
 
-- src/jpegblocks.c and src/jpegblocks.h: Functions used for the voting process.
+- src/windows.c and src/windows.h: Functions used for the voting process.
 
 - src/misc.c and src/misc.h: Useful functions.
 
@@ -58,7 +58,7 @@ Files
 
 - create_svg.py: Creates final masks from txt files to svg files. A typical execution is as follows:
 ```
-python create_svg.py luminance.png nonmeaningful.txt meaningful.txt > <output.svg>
+python create_svg.py luminance.png list_windows.txt > <output.svg>
 ```
 
 
@@ -161,6 +161,30 @@ A typical execution is as follows:
 ```
   ./god pelican.png 128
 ```
+
+
+
+Ouputs
+------
+- luminance.png: Luminance image.
+
+- cross_diff.png: Cross-difference filter applied to the image.
+
+- list_windows.txt: Attributes for each window.
+Each line is composed of eight numbers separated by spaces, that are:
+top left coordinate x of the window, top left coordinate y of the window,
+bottom right x coordinate of the window, bottom right y coordinate of the window,
+log NFA x, log NFA y, most significant grid x coordinate, most significant grid y coordinate.
+For example, the line:
+```
+1 1 200 200 -407.534 -330.733 0 0 
+
+```
+
+
+
+
+
 
 Copyright and License
 ---------------------

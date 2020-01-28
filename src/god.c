@@ -34,24 +34,23 @@
 
 int main(int argc, char **argv) {
     /* inputs */
-    if (argc < 3) error ("use: god <image> <window_size>");
+    if (argc < 3) error ("use: god <image> <window_step>");
 
     /* read input parameters */
     double *input = NULL; // input image
     int X,Y,C;
     input = iio_read_image_double_split(argv[1], &X, &Y, &C);
 
-    int window_size = atoi(argv[2]);
+    int window_step = atoi(argv[2]);
 
-    if (window_size <= 0 || window_size > X-3 || window_size > Y-3) {
-        if (window_size%8 !=0)
-            error("window_size should be an integer multiple of 8 \n"
-                  "0 <= window_size <= min(height, width)\n"
-                  "you may want to try %d", window_size/8 * 8);
+    if (window_step <= 0 || window_step > X-3 || window_step > Y-3)
+        error("window_step should be an integer\n"
+              "0 <= window_step <= min(height, width)");
+    if (window_step % 8 !=0)
+        error("window_step should be an integer multiple of 8 \n"
+              "0 <= window_step <= min(height, width)\n"
+              "you may want to try %d", window_step/8 * 8);
 
-        error("window_size should be an integer\n"
-              "0 <= window_size <= min(height, width)");
-    }
 
     /* outputs */
     FILE *list_windows ;
@@ -79,10 +78,10 @@ int main(int argc, char **argv) {
 
     /* work on several windows */
 #pragma omp parallel for
-    for (int x0=1; x0<X-2; x0+=window_size)
-        for (int y0=1; y0<Y-2; y0+=window_size)
-            for (int x1=x0+window_size-1; x1<X-2; x1+=window_size)
-                for (int y1=y0+window_size-1; y1<Y-2; y1+=window_size) {
+    for (int x0=1; x0<X-2; x0+=window_step)
+        for (int y0=1; y0<Y-2; y0+=window_step)
+            for (int x1=x0+window_step-1; x1<X-2; x1+=window_step)
+                for (int y1=y0+window_step-1; y1<Y-2; y1+=window_step) {
                     window win;
 
                     win.coord_a.x = x0;
@@ -116,8 +115,8 @@ int main(int argc, char **argv) {
                 }
 
     /* number of total windows tested */
-    int num_windows = (int)((X-3)/window_size) * (int)((X-3)/window_size + 1) *
-        (int)((Y-3)/window_size) * (int)((Y-3)/window_size + 1) / 4;
+    int num_windows = (int)((X-3)/window_step) * (int)((X-3)/window_step + 1) *
+        (int)((Y-3)/window_step) * (int)((Y-3)/window_step + 1) / 4;
 
     /* print global summary */
     summary(num_meaningful_windows, best_lnfa, num_windows);

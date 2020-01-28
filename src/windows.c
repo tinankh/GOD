@@ -68,11 +68,6 @@ void compute_NFA(window *win, double logNT) {
 
     win->lnfa.x = log_nfa((int)(w*h/16), win->kx/2, (double)win->nx/(w*h), logNT);
     win->lnfa.y = log_nfa((int)(w*h/16), win->ky/2, (double)win->ny/(w*h), logNT);
-
-    /* int nnx = ceil(h/2.0) * ceil(w/8.0); */
-    /* int nny = ceil(h/8.0) * ceil(w/2.0); */
-    /* win->lnfa.x = log_nfa(nnx, win->kx/2, (double)win->nx/(w*h), logNT); */
-    /* win->lnfa.y = log_nfa(nny, win->ky/2, (double)win->ny/(w*h), logNT); */
 }
 
 /**

@@ -150,7 +150,7 @@ The program is executed as:
 That should print the following usage:
 
 ```
-  Error: use: god <image> <window_size>
+  Error: use: god <image> <window_step>
 ```
 
 The command takes an input image as argument. Any image file format handled by

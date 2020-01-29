@@ -122,7 +122,7 @@ void summary(int *num_meaningful_windows, double *best_lnfa, int num_windows) {
            "for each JPEG grid origin:\n");
     for (int j=0; j<8; j++) {
         for (int i=0; i<8; i++)
-            printf("%7i ", num_meaningful_windows[i+j*8]);
+            printf("%8i ", num_meaningful_windows[i+j*8]);
         printf("\n");
     }
 
@@ -130,8 +130,8 @@ void summary(int *num_meaningful_windows, double *best_lnfa, int num_windows) {
     for (int j=0; j<8; j++) {
         for (int i=0; i<8; i++)
             if (best_lnfa[i+j*8] < 0.0)
-                printf("%7.1f ", best_lnfa[i+j*8]);
-            else printf("      - ");
+                printf("%8.1f ", best_lnfa[i+j*8]);
+            else printf("       - ");
         printf("\n");
     }
 

@@ -3,6 +3,8 @@
 
 import sys
 from PIL import Image
+import numpy as np
+
 
 im = Image.open(sys.argv[1])
 width, height = im.size
@@ -13,10 +15,19 @@ print('<svg width="{}px" height="{}px" version="1.1" xmlns="http://www.w3.org/20
 
 print('<image x="0" y="0" width="{}" height="{}" xlink:href="{}"> </image>'.format(width, height, sys.argv[1]))
 
-for line in open(sys.argv[2], 'r').readlines():
-    window = []
-    for att in line.split(' '):
-        window.append(att)
+lnfa = []
+result_file = open(sys.argv[2], 'r').readlines()
+for line in result_file:
+    window = line.split(' ')
+    lnfa.append(max(list(map(float,window[4:6]))))
+
+meaningful = result_file[np.argmin(np.array(lnfa))]
+gridx = meaningful.split(' ')[6]
+gridy = meaningful.split(' ')[7]
+
+
+for line in result_file:
+    window = line.split(' ')
 
     z = list(map(int,window[0:4]))
     if (window[6] == '-1'):
@@ -24,7 +35,7 @@ for line in open(sys.argv[2], 'r').readlines():
               .format(z[0],z[1],z[2]-z[0],z[3]-z[1]))
 
     else:
-        if (window[6] != '0' or window[7] != '0'):
+        if (window[6] != gridx or window[7] != gridy):
             print('<rect x="{}" y="{}" width="{}" height="{}" fill="red" fill-opacity="0.2"></rect>'
                   .format(z[0],z[1],z[2]-z[0],z[3]-z[1]))
 

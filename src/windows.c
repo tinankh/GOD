@@ -154,7 +154,8 @@ void summary(int *num_meaningful_windows, double *best_lnfa, int num_windows) {
                best_lnfa[second_most_meaningful_grid]);
     }
 
-    if (most_meaningful_grid != -1 && most_meaningful_grid != 0)
+    if (most_meaningful_grid != -1 && most_meaningful_grid != 0
+        && second_most_meaningful_grid == -1)
         printf("most meaningful grid different from (0,0), "
                "the image may have been cropped!\n");
 

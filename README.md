@@ -86,9 +86,9 @@ This should print the following message:
 test on pelican.png
 ===================
 ./god pelican.png 128
-number of meaningful windows 35 of 36 (97 %)
+number of meaningful windows 32 of 36 (88 %)
 number of windows (meaningful votes) for each JPEG grid origin:
-      0       0       0       0       0       0      35       0
+      0       0       0       0       0       0      32       0
       0       0       0       0       0       0       0       0
       0       0       0       0       0       0       0       0
       0       0       0       0       0       0       0       0
@@ -97,7 +97,7 @@ number of windows (meaningful votes) for each JPEG grid origin:
       0       0       0       0       0       0       0       0
       0       0       0       0       0       0       0       0
 best log NFA for each JPEG grid origin:
-      -       -       -       -       -       -   -92.7       -
+      -       -       -       -       -       -   -91.5       -
       -       -       -       -       -       -       -       -
       -       -       -       -       -       -       -       -
       -       -       -       -       -       -       -       -
@@ -106,7 +106,7 @@ best log NFA for each JPEG grid origin:
       -       -       -       -       -       -       -       -
       -       -       -       -       -       -       -       -
 number of different meaningful grids: 1
-most meaningful grid origin 6 0 with NFA: 10^-92.6767
+most meaningful grid origin 6 0 with NFA: 10^-91.4726
 
 most meaningful grid different from (0,0), the image may have been cropped!
 

@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
     list_windows = fopen("list_windows.txt", "w");
 
     /* maximum number of tests */
-    double logNT = log10(X*Y) + log10(16.0);
+    double logNT = 2.0*log10(X*Y) - log10(4.0);
 
     /* work on Y channel
        xcalloc initializes the data to zero */

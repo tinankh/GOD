@@ -16,7 +16,12 @@ print('<svg width="{}px" height="{}px" version="1.1" xmlns="http://www.w3.org/20
 print('<image x="0" y="0" width="{}" height="{}" xlink:href="{}"> </image>'.format(width, height, sys.argv[1]))
 
 lnfa = []
+zblue = []
+zred = []
+
 result_file = open(sys.argv[2], 'r').readlines()
+
+# get most meaningful grid origin
 for line in result_file:
     window = line.split(' ')
     lnfa.append(max(list(map(float,window[4:6]))))
@@ -26,17 +31,25 @@ gridx = meaningful.split(' ')[6]
 gridy = meaningful.split(' ')[7]
 
 
+# get list of significant (for foreign grids) and none significant windows
 for line in result_file:
     window = line.split(' ')
 
-    z = list(map(int,window[0:4]))
     if (window[6] == '-1'):
-        print('<rect x="{}" y="{}" width="{}" height="{}" fill="blue" fill-opacity="0.2"></rect>'
-              .format(z[0],z[1],z[2]-z[0],z[3]-z[1]))
+        zblue.append(list(map(int, window[0:4])))
 
     else:
         if (window[6] != gridx or window[7] != gridy):
-            print('<rect x="{}" y="{}" width="{}" height="{}" fill="red" fill-opacity="0.2"></rect>'
-                  .format(z[0],z[1],z[2]-z[0],z[3]-z[1]))
+            zred.append(list(map(int, window[0:4])))
+
+# draw blue windows
+for z in zblue:
+    print('<rect x="{}" y="{}" width="{}" height="{}" fill="blue" fill-opacity="0.2"></rect>'
+          .format(z[0],z[1],z[2]-z[0],z[3]-z[1]))
+
+# draw red windows over the blue windows
+for z in zred:
+    print('<rect x="{}" y="{}" width="{}" height="{}" fill="red" fill-opacity="0.2"></rect>'
+          .format(z[0],z[1],z[2]-z[0],z[3]-z[1]))
 
 print('</svg>')

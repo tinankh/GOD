@@ -88,23 +88,23 @@ test on pelican.png
 ./god pelican.png 128
 number of meaningful windows 32 of 36 (88 %)
 number of windows (meaningful votes) for each JPEG grid origin:
-      0       0       0       0       0       0      32       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
+       0        0        0        0        0        0       32        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
 best log NFA for each JPEG grid origin:
-      -       -       -       -       -       -   -91.5       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
+       -        -        -        -        -        -    -91.5        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
 number of different meaningful grids: 1
 most meaningful grid origin 6 0 with NFA: 10^-91.4726
 
@@ -115,23 +115,23 @@ test on roma.png
 ./god roma.png 128
 number of meaningful windows 0 of 36 (0 %)
 number of windows (meaningful votes) for each JPEG grid origin:
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
-      0       0       0       0       0       0       0       0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
+       0        0        0        0        0        0        0        0
 best log NFA for each JPEG grid origin:
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
-      -       -       -       -       -       -       -       -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
+       -        -        -        -        -        -        -        -
 number of different meaningful grids: 0
 no meaningful grid found
 

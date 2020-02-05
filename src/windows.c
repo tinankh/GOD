@@ -27,7 +27,6 @@
 #include "windows.h"
 #include "misc.h"
 
-
 /**
  *   Computes the cross-difference of an image
  */
@@ -126,7 +125,7 @@ void summary(int *num_meaningful_windows, double *best_lnfa, int num_windows) {
         printf("\n");
     }
 
-    printf("best log NFA for each JPEG grid origin:\n");
+    printf("best log(NFA) for each JPEG grid origin:\n");
     for (int j=0; j<8; j++) {
         for (int i=0; i<8; i++)
             if (best_lnfa[i+j*8] < 0.0)
@@ -136,7 +135,6 @@ void summary(int *num_meaningful_windows, double *best_lnfa, int num_windows) {
     }
 
     printf("number of different meaningful grids: %d\n", num_meaningful_grids);
-
 
     if (most_meaningful_grid != -1)
         printf("most meaningful grid origin %d %d with NFA: 10^%g\n\n",
@@ -163,5 +161,4 @@ void summary(int *num_meaningful_windows, double *best_lnfa, int num_windows) {
                                       most_meaningful_grid == 0))
         printf("no suspicious traces found in the image "
                "with the performed analysis.\n");
-
 }

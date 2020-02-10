@@ -118,6 +118,10 @@ int main(int argc, char **argv) {
     int num_windows = (int)((X-3)/window_step) * (int)((X-3)/window_step + 1) *
         (int)((Y-3)/window_step) * (int)((Y-3)/window_step + 1) / 4;
 
+    /* print inputs */
+    printf("image size: %i x %i\n", X, Y);
+    printf("window step size: %i\n", window_step);
+
     /* print global summary */
     summary(num_meaningful_windows, best_lnfa, num_windows);
 

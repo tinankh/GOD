@@ -152,11 +152,12 @@ void summary(int *num_meaningful_windows, double *best_lnfa, int num_windows) {
                "(%d,%d) with NFA: 10^%g\n",
                second_most_meaningful_grid%8, second_most_meaningful_grid/8,
                best_lnfa[second_most_meaningful_grid]);
+
         printf("\nThis image shows more than one meaningful JPEG grid.  "
-               "This may be caused by\nimage manipulations such as resampling "
-               "or some particular image contents.\nIt may also be due to a "
-               "forgery in the image.  Please examine the deviant\nmeaningful "
-               "blocks to make your own opinion about a potential forgery.\n");
+               "This may be caused\nby image manipulations such as resampling, "
+               "copy-paste, splicing, or some\nparticular periodic pattern in "
+               "the scene.  Please examine the deviant\nmeaningful blocks to "
+               "make your own opinion about a potential forgery.\n");
     }
 
     if (most_meaningful_grid != -1 && most_meaningful_grid != 0

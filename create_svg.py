@@ -2,12 +2,12 @@
 # -*- coding:utf-8 -*-
 
 import sys
-from PIL import Image
+import imageio
 import numpy as np
 
 
-im = Image.open(sys.argv[1])
-width, height = im.size
+im = imageio.imread(sys.argv[1])
+height, width = im.shape
 
 print('<?xml version="1.0" standalone="no"?>')
 print('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">')

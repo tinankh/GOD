@@ -1,6 +1,6 @@
 EXEC=./god
 SRCDIR=src
-CFLAGS=-std=gnu99 -O3 $(OpenMP)
+CFLAGS=-O3 $(OpenMP)
 LIB=-lpng -ltiff -ljpeg -lm
 SRC_FILES=$(wildcard $(SRCDIR)/*.c)
 

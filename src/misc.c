@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------
 
-  Copyright (c) 2018-2019 Rafael Grompone von Gioi <grompone@gmail.com>
-  Copyright (c) 2018-2019 Tina Nikoukhah <tinanikoukhah@gmail.com>
+  Copyright (c) 2018-2020 Rafael Grompone von Gioi <grompone@gmail.com>
+  Copyright (c) 2018-2020 Tina Nikoukhah <tinanikoukhah@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
@@ -22,11 +22,10 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-/*----------------------------------------------------------------------------*/
-/** Fatal error, print a formated message to standard-error output and exit.
+/* Fatal error, print a formatted message to standard-error output and exit.
 
-    The syntax is exactly as the one of printf, but it adds "error: "
-    before the message and then it end the program with an error number.
+   The syntax is exactly as the one of printf, but it adds "error: "
+   before the message and then it end the program with an error number.
  */
 void error(char * msg, ...)
 {
@@ -44,7 +43,6 @@ void error(char * msg, ...)
   /* end execution with an error */
   exit(EXIT_FAILURE);
 }
-
 
 void * xcalloc(size_t n_items, size_t size) {
     void * p;

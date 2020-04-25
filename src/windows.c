@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------
 
-  Copyright (c) 2018-2019 Rafael Grompone von Gioi <grompone@gmail.com>
-  Copyright (c) 2018-2019 Tina Nikoukhah <tinanikoukhah@gmail.com>
+  Copyright (c) 2018-2020 Rafael Grompone von Gioi <grompone@gmail.com>
+  Copyright (c) 2018-2020 Tina Nikoukhah <tinanikoukhah@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
@@ -65,8 +65,10 @@ void compute_NFA(window *win, double logNT) {
     int w = win->coord_b.x - win->coord_a.x + 1;
     int h = win->coord_b.y - win->coord_a.y + 1;
 
-    win->lnfa.x = log_nfa((int)(w*h/16), win->kx/2, (double)win->nx/(w*h), logNT);
-    win->lnfa.y = log_nfa((int)(w*h/16), win->ky/2, (double)win->ny/(w*h), logNT);
+    win->lnfa.x = log_nfa( (int)(w*h/16), win->kx/2,
+                           (double)win->nx/(w*h), logNT );
+    win->lnfa.y = log_nfa( (int)(w*h/16), win->ky/2,
+                           (double)win->ny/(w*h), logNT);
 }
 
 /**
@@ -113,12 +115,13 @@ void summary(int *num_meaningful_windows, double *best_lnfa, int num_windows) {
         }
 
     /* print global output */
-    printf("number of meaningful windows %i of %i (%i %%)\n",
-           total_num_meaningful_windows, num_windows,
+    printf("total number of evaluated windows: %i\n", num_windows);
+
+    printf("number of meaningful windows: %i (%i %%)\n",
+           total_num_meaningful_windows,
            100 * total_num_meaningful_windows / num_windows);
 
-    printf("number of windows (meaningful votes) "
-           "for each JPEG grid origin:\n");
+    printf("number of meaningful windows for each JPEG grid origin:\n");
     for (int j=0; j<8; j++) {
         for (int i=0; i<8; i++)
             printf("%8i ", num_meaningful_windows[i+j*8]);
@@ -134,31 +137,35 @@ void summary(int *num_meaningful_windows, double *best_lnfa, int num_windows) {
         printf("\n");
     }
 
-    printf("number of different meaningful grids: %d\n", num_meaningful_grids);
+    printf("number of meaningful JPEG grids found: %d\n",
+           num_meaningful_grids);
 
     if (most_meaningful_grid != -1)
-        printf("most meaningful grid origin %d %d with NFA: 10^%g\n\n",
+        printf("most meaningful JPEG grid origin (%d,%d) with NFA: 10^%g\n",
                most_meaningful_grid%8, most_meaningful_grid/8,
                best_lnfa[most_meaningful_grid]);
     else
-        printf("no meaningful grid found\n\n");
+        printf("no meaningful grid found\n");
 
     if (num_meaningful_grids > 1) {
-        printf("more than one meaningful grid, "
-               "this may indicate the presence of a forgery!\n");
-
-        printf("second most meaningful grid origin %d %d with NFA: 10^%g\n",
+        printf("second most meaningful JPEG grid origin "
+               "(%d,%d) with NFA: 10^%g\n",
                second_most_meaningful_grid%8, second_most_meaningful_grid/8,
                best_lnfa[second_most_meaningful_grid]);
+        printf("\nThis image shows more than one meaningful JPEG grid.  "
+               "This may be caused by\nimage manipulations such as resampling "
+               "or some particular image contents.\nIt may also be due to a "
+               "forgery in the image.  Please examine the deviant\nmeaningful "
+               "blocks to make your own opinion about a potential forgery.\n");
     }
 
     if (most_meaningful_grid != -1 && most_meaningful_grid != 0
         && second_most_meaningful_grid == -1)
-        printf("most meaningful grid different from (0,0), "
-               "the image may have been cropped!\n");
+        printf("\nThe most meaningful JPEG grid origin is not (0,0).  "
+               "This may indicate that\nthe image have been cropped.\n");
 
     if (num_meaningful_grids <= 1 && (most_meaningful_grid == -1 ||
                                       most_meaningful_grid == 0))
-        printf("no suspicious traces found in the image "
+        printf("\nNo suspicious traces found in the image "
                "with the performed analysis.\n");
 }

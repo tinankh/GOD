@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------
 
-  Copyright (c) 2018-2019 Rafael Grompone von Gioi <grompone@gmail.com>
-  Copyright (c) 2018-2019 Tina Nikoukhah <tinanikoukhah@gmail.com>
+  Copyright (c) 2018-2020 Rafael Grompone von Gioi <grompone@gmail.com>
+  Copyright (c) 2018-2020 Tina Nikoukhah <tinanikoukhah@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
@@ -50,7 +50,6 @@ int main(int argc, char **argv) {
         error("window_step should be an integer multiple of 8 \n"
               "0 <= window_step <= min(height, width)\n"
               "you may want to try %d", window_step/8 * 8);
-
 
     /* outputs */
     FILE *list_windows ;
